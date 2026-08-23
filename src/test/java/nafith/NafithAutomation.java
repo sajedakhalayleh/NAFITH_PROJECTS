@@ -215,8 +215,90 @@ public class NafithAutomation {
         if (parentMenuText != null
                 && !parentMenuText.isEmpty()) {
 
-            WebElement parent =
-                    findParentMenu(parentMenuText);
+            WebElement parent = null;
+
+
+            // =================================================
+            // أول محاولة:
+            // نجيب الـParent عن طريق الـChild URL
+            //
+            // HTML عندك:
+            //
+            // <button data-sidebar="menu-button">
+            //     ...
+            // </button>
+            //
+            // <div data-state="open">
+            //     <ul data-sidebar="menu-sub">
+            //         <li>
+            //             <a data-sidebar="menu-sub-button"
+            //                href="/app/plans-managements">
+            //                 الخطط
+            //             </a>
+            //         </li>
+            //     </ul>
+            // </div>
+            //
+            // لذلك نجيب الـChild ثم نطلع للـdiv
+            // ونرجع للـbutton السابق.
+            // =================================================
+
+            try {
+
+                By parentFromChildLocator =
+                        By.xpath(
+                                "//a[@data-sidebar='menu-sub-button' " +
+                                        "and @href='" +
+                                        expectedUrlPart +
+                                        "']" +
+                                        "/ancestor::div[@data-state='open'][1]" +
+                                        "/preceding-sibling::button" +
+                                        "[@data-sidebar='menu-button'][1]"
+                        );
+
+
+                parent =
+                        wait.until(
+                                ExpectedConditions.presenceOfElementLocated(
+                                        parentFromChildLocator
+                                )
+                        );
+
+
+                System.out.println(
+                        "FOUND PARENT FROM CHILD URL: ["
+                                + parent.getText()
+                                + "]"
+                );
+
+
+            } catch (Exception e) {
+
+                System.out.println(
+                        "Could not find parent from child URL."
+                );
+
+                System.out.println(
+                        "Trying normal parent locator..."
+                );
+            }
+
+
+            // =================================================
+            // ثاني محاولة:
+            // الـlocator الأساسي الموجود عندنا
+            // =================================================
+
+            if (parent == null) {
+
+                parent =
+                        findParentMenu(parentMenuText);
+            }
+
+
+            // =================================================
+            // إذا ما لقيناه
+            // =================================================
 
             if (parent == null) {
 
@@ -226,16 +308,27 @@ public class NafithAutomation {
                 );
             }
 
-            // -------------------------------------------------
-            // نشوف إذا الـ Parent مفتوح
-            // -------------------------------------------------
+
+            // =================================================
+            // نشوف إذا الـParent مفتوح
+            // =================================================
 
             String state =
                     parent.getAttribute("data-state");
 
-            // -------------------------------------------------
+
+            System.out.println(
+                    "PARENT MENU: ["
+                            + parentMenuText
+                            + "] DATA-STATE: ["
+                            + state
+                            + "]"
+            );
+
+
+            // =================================================
             // إذا مسكر افتحه
-            // -------------------------------------------------
+            // =================================================
 
             if (!"open".equals(state)) {
 
@@ -244,46 +337,60 @@ public class NafithAutomation {
                 sleep(WAIT_AFTER_CLICK);
             }
 
-            // -------------------------------------------------
-            // إذا الرابط الداخلي مش ظاهر
-            // -------------------------------------------------
 
-            List<WebElement> childLinks =
-                    driver.findElements(
-                            By.cssSelector(
-                                    "a[href='" +
-                                            expectedUrlPart +
-                                            "']"
+            // =================================================
+            // دور على Child
+            // =================================================
+
+            WebElement child =
+                    wait.until(
+                            ExpectedConditions.visibilityOfElementLocated(
+                                    By.cssSelector(
+                                            "a[href='" +
+                                                    expectedUrlPart +
+                                                    "']"
+                                    )
                             )
                     );
 
-            boolean childVisible = false;
 
-            for (WebElement link : childLinks) {
+            // =================================================
+            // اضغط الـChild
+            // =================================================
 
-                try {
+            clickElement(child);
 
-                    if (link.isDisplayed()) {
+            sleep(WAIT_AFTER_CLICK);
 
-                        childVisible = true;
 
-                        break;
-                    }
+            // =================================================
+            // تأكد من فتح الصفحة
+            // =================================================
 
-                } catch (Exception ignored) {
-                }
-            }
+            wait.until(
+                    ExpectedConditions.urlContains(
+                            expectedUrlPart
+                    )
+            );
 
-            if (!childVisible) {
 
-                clickElement(parent);
+            Assert.assertTrue(
+                    driver.getCurrentUrl()
+                            .contains(expectedUrlPart),
 
-                sleep(WAIT_AFTER_CLICK);
-            }
+                    "لم يتم الانتقال للشاشة المتوقعة: "
+                            + childMenuText
+            );
+
+
+            sleep(WAIT_AFTER_CLICK);
+
+            return;
         }
 
+
         // =====================================================
-        // 2. دور على الرابط بالـ URL
+        // 2. إذا ما في Parent Menu
         // =====================================================
 
         WebElement child =
@@ -297,16 +404,18 @@ public class NafithAutomation {
                         )
                 );
 
+
         // =====================================================
-        // 3. اضغط الرابط
+        // اضغط الرابط
         // =====================================================
 
         clickElement(child);
 
         sleep(WAIT_AFTER_CLICK);
 
+
         // =====================================================
-        // 4. تأكد من فتح الصفحة
+        // تأكد من فتح الصفحة
         // =====================================================
 
         wait.until(
@@ -315,6 +424,7 @@ public class NafithAutomation {
                 )
         );
 
+
         Assert.assertTrue(
                 driver.getCurrentUrl()
                         .contains(expectedUrlPart),
@@ -322,6 +432,7 @@ public class NafithAutomation {
                 "لم يتم الانتقال للشاشة المتوقعة: "
                         + childMenuText
         );
+
 
         sleep(WAIT_AFTER_CLICK);
     }
@@ -589,26 +700,34 @@ public class NafithAutomation {
                         )
                 );
 
+
         if (records.isEmpty()) {
+
             return null;
         }
+
 
         WebElement firstRecord =
                 records.get(0);
 
+
         String href =
                 firstRecord.getAttribute("href");
+
 
         clickElement(firstRecord);
 
         sleep(WAIT_AFTER_CLICK);
 
+
         wait.until(
                 ExpectedConditions.urlContains("/view/")
         );
 
+
         JavascriptExecutor js =
                 (JavascriptExecutor) driver;
+
 
         for (int i = 0; i < 5; i++) {
 
@@ -616,22 +735,28 @@ public class NafithAutomation {
                     "window.scrollBy(0, 600);"
             );
 
+
             sleep(300);
+
 
             long height =
                     (long) js.executeScript(
                             "return document.body.scrollHeight"
                     );
 
+
             long scrollY =
                     (long) js.executeScript(
                             "return window.scrollY"
                     );
 
+
             if (scrollY + 900 >= height) {
+
                 break;
             }
         }
+
 
         Assert.assertTrue(
                 driver.getCurrentUrl()
@@ -639,6 +764,7 @@ public class NafithAutomation {
 
                 "لم يتم فتح صفحة تفاصيل الريكورد"
         );
+
 
         return href;
     }
@@ -655,7 +781,9 @@ public class NafithAutomation {
                         "window.scrollTo(0, 0);"
                 );
 
+
         sleep(500);
+
 
         List<WebElement> activityLinks =
                 driver.findElements(
@@ -665,26 +793,34 @@ public class NafithAutomation {
                         )
                 );
 
+
         if (activityLinks.isEmpty()) {
+
             return false;
         }
+
 
         WebElement activityLink =
                 activityLinks.get(0);
 
+
         if (!activityLink.isDisplayed()) {
+
             return false;
         }
+
 
         clickElement(activityLink);
 
         sleep(WAIT_AFTER_CLICK);
+
 
         wait.until(
                 ExpectedConditions.urlContains(
                         "/activity-log/"
                 )
         );
+
 
         return true;
     }
@@ -707,12 +843,16 @@ public class NafithAutomation {
                         )
                 );
 
+
         if (buttons.isEmpty()) {
+
             return;
         }
 
+
         WebElement downloadButton =
                 buttons.get(0);
+
 
         clickElement(downloadButton);
 
@@ -742,6 +882,7 @@ public class NafithAutomation {
                 screenUrlPart
         );
 
+
         // =====================================================
         // Details
         // =====================================================
@@ -751,11 +892,13 @@ public class NafithAutomation {
             String detailsUrl =
                     openFirstRecordDetailsAndScroll();
 
+
             if (detailsUrl != null
                     && openActivityLog) {
 
                 openActivityLogIfAvailable();
             }
+
 
             // =================================================
             // الرجوع للقائمة
@@ -766,7 +909,9 @@ public class NafithAutomation {
                             screenUrlPart
             );
 
+
             sleep(WAIT_AFTER_CLICK);
+
 
             wait.until(
                     ExpectedConditions.urlContains(
@@ -774,8 +919,10 @@ public class NafithAutomation {
                     )
             );
 
+
             sleep(WAIT_AFTER_CLICK);
         }
+
 
         // =====================================================
         // Download
@@ -804,12 +951,14 @@ public class NafithAutomation {
                 screenUrlPart
         );
 
+
         // =====================================================
         // 2. Open first record using View
         // =====================================================
 
         String detailsUrl =
                 openFirstRecordDetailsAndScroll();
+
 
         // =====================================================
         // 3. Return to the list screen
@@ -822,13 +971,16 @@ public class NafithAutomation {
                             screenUrlPart
             );
 
+
             sleep(WAIT_AFTER_CLICK);
+
 
             wait.until(
                     ExpectedConditions.urlContains(
                             screenUrlPart
                     )
             );
+
 
             sleep(WAIT_AFTER_CLICK);
         }
@@ -851,6 +1003,7 @@ public class NafithAutomation {
 
         openDashboardAndExport();
 
+
         // =====================================================
         // 1. Fleet
         // =====================================================
@@ -863,6 +1016,7 @@ public class NafithAutomation {
                 true,
                 true
         );
+
 
         // =====================================================
         // 2. Users
@@ -877,6 +1031,7 @@ public class NafithAutomation {
                 true
         );
 
+
         // =====================================================
         // 3. Tags
         // =====================================================
@@ -889,6 +1044,7 @@ public class NafithAutomation {
                 true,
                 true
         );
+
 
         // =====================================================
         // 4. Cargo Release Permits
@@ -903,6 +1059,7 @@ public class NafithAutomation {
                 true
         );
 
+
         // =====================================================
         // 5. Permits
         // =====================================================
@@ -915,6 +1072,7 @@ public class NafithAutomation {
                 true,
                 true
         );
+
 
         // =====================================================
         // 6. Plans
@@ -929,6 +1087,7 @@ public class NafithAutomation {
                 true
         );
 
+
         // =====================================================
         // 6.1 Scheduling Release Plans
         // =====================================================
@@ -939,6 +1098,7 @@ public class NafithAutomation {
                 "/app/scheduling-release-plans"
         );
 
+
         // =====================================================
         // 6.2 Waiting Release Plans
         // =====================================================
@@ -948,6 +1108,7 @@ public class NafithAutomation {
                 "خطط فك الانتظار",
                 "/app/waiting-release-plans"
         );
+
 
         // =====================================================
         // 7. Financial Transactions
@@ -962,6 +1123,7 @@ public class NafithAutomation {
                 true
         );
 
+
         // =====================================================
         // 8. Gate Transactions
         // =====================================================
@@ -974,6 +1136,7 @@ public class NafithAutomation {
                 true,
                 true
         );
+
 
         // =====================================================
         // 8.1 Live Gates
