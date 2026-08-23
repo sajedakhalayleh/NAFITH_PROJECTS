@@ -333,94 +333,63 @@ public class NafithAutomation {
 
     protected WebElement findParentMenu(String parentMenuText) {
 
-        // -----------------------------------------------------
-        // Locator خاص بالخطط حسب الـ HTML الفعلي
-        // -----------------------------------------------------
+        // =====================================================
+        // 1. Locator أساسي للـ Parent Menu
+        // =====================================================
 
-        if ("الخطط".equals(parentMenuText)) {
-
-            try {
-
-                By plansLocator =
-                        By.xpath(
-                                "//button[@data-sidebar='menu-button' " +
-                                        "and .//span[normalize-space(.)='الخطط']]"
-                        );
-
-                WebElement plansMenu =
-                        wait.until(
-                                ExpectedConditions.visibilityOfElementLocated(
-                                        plansLocator
-                                )
-                        );
-
-                System.out.println(
-                        "FOUND PLANS MENU: ["
-                                + plansMenu.getText()
-                                + "]"
+        By parentLocator =
+                By.xpath(
+                        "//button[@data-sidebar='menu-button' " +
+                                "and .//*[normalize-space(.)='" +
+                                parentMenuText +
+                                "']]"
                 );
 
-                return plansMenu;
 
-            } catch (Exception e) {
-
-                System.out.println(
-                        "FAILED TO FIND PLANS MENU: "
-                                + e.getMessage()
-                );
-            }
-        }
-
-
-        // -----------------------------------------------------
-        // انتظر لحد ما يكون الـ Parent موجود بالـ DOM
-        // -----------------------------------------------------
+        // =====================================================
+        // 2. انتظر وجود الـ Parent في الـ DOM
+        // =====================================================
 
         try {
 
             wait.until(
                     ExpectedConditions.presenceOfElementLocated(
-                            By.xpath(
-                                    "//button[" +
-                                            ".//span[normalize-space(text())='" +
-                                            parentMenuText +
-                                            "']" +
-                                            "]"
-                            )
+                            parentLocator
                     )
             );
 
         } catch (Exception ignored) {
 
-            // إذا ما ظهر، نكمل للـ fallback الموجود تحت
+            System.out.println(
+                    "Parent menu not found in DOM yet: "
+                            + parentMenuText
+            );
         }
 
 
-        // -----------------------------------------------------
-        // الـ locator الأصلي لباقي الـ Parent Menus
-        // -----------------------------------------------------
+        // =====================================================
+        // 3. جيب كل الـ Parent Buttons
+        // =====================================================
 
         List<WebElement> buttons =
-                driver.findElements(
-                        By.xpath(
-                                "//button[" +
-                                        ".//span[normalize-space(text())='" +
-                                        parentMenuText +
-                                        "']" +
-                                        "]"
-                        )
-                );
+                driver.findElements(parentLocator);
 
-
-        // -----------------------------------------------------
-        // DEBUG: Parent Menu Buttons
-        // -----------------------------------------------------
 
         System.out.println(
                 "===== DEBUG PARENT MENU: "
                         + parentMenuText
                         + " ====="
         );
+
+        System.out.println(
+                "PARENT BUTTONS FOUND: "
+                        + buttons.size()
+        );
+
+
+        // =====================================================
+        // 4. دور على Button ظاهر
+        // =====================================================
 
         for (WebElement button : buttons) {
 
@@ -438,93 +407,58 @@ public class NafithAutomation {
                                 + "]"
                 );
 
-            } catch (Exception e) {
-
                 System.out.println(
-                        "Could not read button"
+                        "BUTTON DATA-STATE: ["
+                                + button.getAttribute("data-state")
+                                + "]"
                 );
-            }
-        }
 
-        System.out.println(
-                "===== END DEBUG ====="
-        );
-
-
-        // -----------------------------------------------------
-        // إذا لقينا Button ظاهر
-        // -----------------------------------------------------
-
-        for (WebElement button : buttons) {
-
-            try {
 
                 if (button.isDisplayed()) {
+
+                    System.out.println(
+                            "FOUND PARENT MENU: ["
+                                    + button.getText()
+                                    + "]"
+                    );
 
                     return button;
                 }
 
-            } catch (Exception ignored) {
-            }
-        }
-
-
-        // -----------------------------------------------------
-        // Fallback
-        // -----------------------------------------------------
-
-        List<WebElement> elements =
-                driver.findElements(
-                        By.xpath(
-                                "//*[normalize-space(text())='" +
-                                        parentMenuText +
-                                        "']"
-                        )
-                );
-
-
-        // -----------------------------------------------------
-        // DEBUG: Text Elements
-        // -----------------------------------------------------
-
-        System.out.println(
-                "===== DEBUG TEXT ELEMENTS: "
-                        + parentMenuText
-                        + " ====="
-        );
-
-        for (WebElement element : elements) {
-
-            try {
-
-                System.out.println(
-                        "ELEMENT TAG: ["
-                                + element.getTagName()
-                                + "] TEXT: ["
-                                + element.getText()
-                                + "] DISPLAYED: ["
-                                + element.isDisplayed()
-                                + "]"
-                );
-
             } catch (Exception e) {
 
                 System.out.println(
-                        "Could not read element"
+                        "Could not inspect parent button: "
+                                + e.getMessage()
                 );
             }
         }
 
+
+        // =====================================================
+        // 5. Fallback:
+        // دور على الـ span/text نفسه وبعدين اطلع للـ Button
+        // =====================================================
+
+        By textLocator =
+                By.xpath(
+                        "//*[normalize-space(.)='" +
+                                parentMenuText +
+                                "']"
+                );
+
+
+        List<WebElement> textElements =
+                driver.findElements(textLocator);
+
+
         System.out.println(
-                "===== END TEXT ELEMENTS ====="
+                "TEXT ELEMENTS FOUND: "
+                        + textElements.size()
         );
 
 
-        // -----------------------------------------------------
-        // البحث عن أقرب Parent Button
-        // -----------------------------------------------------
-
-        for (WebElement element : elements) {
+        for (WebElement element : textElements) {
 
             try {
 
@@ -534,17 +468,24 @@ public class NafithAutomation {
                 }
 
 
-                List<WebElement> parentButtons =
-                        element.findElements(
+                WebElement parentButton =
+                        element.findElement(
                                 By.xpath(
-                                        "./ancestor::button[1]"
+                                        "./ancestor::button[@data-sidebar='menu-button'][1]"
                                 )
                         );
 
 
-                if (!parentButtons.isEmpty()) {
+                if (parentButton != null
+                        && parentButton.isDisplayed()) {
 
-                    return parentButtons.get(0);
+                    System.out.println(
+                            "FOUND PARENT THROUGH TEXT FALLBACK: ["
+                                    + parentButton.getText()
+                                    + "]"
+                    );
+
+                    return parentButton;
                 }
 
             } catch (Exception ignored) {
@@ -552,12 +493,60 @@ public class NafithAutomation {
         }
 
 
-        // -----------------------------------------------------
-        // لم يتم العثور على Parent Menu
-        // -----------------------------------------------------
+        // =====================================================
+        // 6. Fallback أخير:
+        // دور بأي Button يحتوي النص
+        // =====================================================
+
+        List<WebElement> allButtons =
+                driver.findElements(
+                        By.xpath(
+                                "//button[.//*[contains(normalize-space(.),'" +
+                                        parentMenuText +
+                                        "')]]"
+                        )
+                );
+
+
+        System.out.println(
+                "FALLBACK BUTTONS FOUND: "
+                        + allButtons.size()
+        );
+
+
+        for (WebElement button : allButtons) {
+
+            try {
+
+                if (button.isDisplayed()) {
+
+                    System.out.println(
+                            "FOUND PARENT THROUGH FINAL FALLBACK: ["
+                                    + button.getText()
+                                    + "]"
+                    );
+
+                    return button;
+                }
+
+            } catch (Exception ignored) {
+            }
+        }
+
+
+        // =====================================================
+        // 7. لم يتم العثور عليه
+        // =====================================================
+
+        System.out.println(
+                "FAILED TO FIND PARENT MENU: "
+                        + parentMenuText
+        );
 
         return null;
     }
+
+
     // =========================================================
     // SAFE CLICK
     // =========================================================
