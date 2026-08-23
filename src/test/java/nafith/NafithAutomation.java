@@ -344,7 +344,6 @@ public class NafithAutomation {
                 By plansLocator =
                         By.xpath(
                                 "//button[@data-sidebar='menu-button' " +
-                                        "and @data-state='open' " +
                                         "and .//span[normalize-space(.)='الخطط']]"
                         );
 
@@ -372,6 +371,7 @@ public class NafithAutomation {
             }
         }
 
+
         // -----------------------------------------------------
         // انتظر لحد ما يكون الـ Parent موجود بالـ DOM
         // -----------------------------------------------------
@@ -391,7 +391,10 @@ public class NafithAutomation {
             );
 
         } catch (Exception ignored) {
+
+            // إذا ما ظهر، نكمل للـ fallback الموجود تحت
         }
+
 
         // -----------------------------------------------------
         // الـ locator الأصلي لباقي الـ Parent Menus
@@ -407,6 +410,7 @@ public class NafithAutomation {
                                         "]"
                         )
                 );
+
 
         // -----------------------------------------------------
         // DEBUG: Parent Menu Buttons
@@ -446,6 +450,7 @@ public class NafithAutomation {
                 "===== END DEBUG ====="
         );
 
+
         // -----------------------------------------------------
         // إذا لقينا Button ظاهر
         // -----------------------------------------------------
@@ -463,6 +468,7 @@ public class NafithAutomation {
             }
         }
 
+
         // -----------------------------------------------------
         // Fallback
         // -----------------------------------------------------
@@ -475,6 +481,7 @@ public class NafithAutomation {
                                         "']"
                         )
                 );
+
 
         // -----------------------------------------------------
         // DEBUG: Text Elements
@@ -512,6 +519,7 @@ public class NafithAutomation {
                 "===== END TEXT ELEMENTS ====="
         );
 
+
         // -----------------------------------------------------
         // البحث عن أقرب Parent Button
         // -----------------------------------------------------
@@ -521,8 +529,10 @@ public class NafithAutomation {
             try {
 
                 if (!element.isDisplayed()) {
+
                     continue;
                 }
+
 
                 List<WebElement> parentButtons =
                         element.findElements(
@@ -530,6 +540,7 @@ public class NafithAutomation {
                                         "./ancestor::button[1]"
                                 )
                         );
+
 
                 if (!parentButtons.isEmpty()) {
 
@@ -540,14 +551,13 @@ public class NafithAutomation {
             }
         }
 
+
         // -----------------------------------------------------
         // لم يتم العثور على Parent Menu
         // -----------------------------------------------------
 
         return null;
     }
-
-
     // =========================================================
     // SAFE CLICK
     // =========================================================
