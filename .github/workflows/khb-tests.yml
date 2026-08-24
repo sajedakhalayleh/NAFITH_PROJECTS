@@ -32,7 +32,7 @@ jobs:
           username: qatest@nafith.com
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: "JOBORDERS-Live - ${{ github.run_id }}"
-          to: skhalayleh@nafith.com
+          to: haljassem@nafith.com, skhalayleh@nafith.com
           from: qatest@nafith.com
           body: "JO borders daily health test (Live): ${{ job.status }}"
           attachments: joborders-report.html
