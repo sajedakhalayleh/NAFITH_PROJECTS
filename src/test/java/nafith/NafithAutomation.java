@@ -221,26 +221,6 @@ public class NafithAutomation {
             // =================================================
             // أول محاولة:
             // نجيب الـParent عن طريق الـChild URL
-            //
-            // HTML عندك:
-            //
-            // <button data-sidebar="menu-button">
-            //     ...
-            // </button>
-            //
-            // <div data-state="open">
-            //     <ul data-sidebar="menu-sub">
-            //         <li>
-            //             <a data-sidebar="menu-sub-button"
-            //                href="/app/plans-managements">
-            //                 الخطط
-            //             </a>
-            //         </li>
-            //     </ul>
-            // </div>
-            //
-            // لذلك نجيب الـChild ثم نطلع للـdiv
-            // ونرجع للـbutton السابق.
             // =================================================
 
             try {
@@ -266,9 +246,9 @@ public class NafithAutomation {
 
 
                 System.out.println(
-                        "FOUND PARENT FROM CHILD URL: ["
-                                + parent.getText()
-                                + "]"
+                        "FOUND PARENT FROM CHILD URL: [" +
+                                parent.getText() +
+                                "]"
                 );
 
 
@@ -318,11 +298,11 @@ public class NafithAutomation {
 
 
             System.out.println(
-                    "PARENT MENU: ["
-                            + parentMenuText
-                            + "] DATA-STATE: ["
-                            + state
-                            + "]"
+                    "PARENT MENU: [" +
+                            parentMenuText +
+                            "] DATA-STATE: [" +
+                            state +
+                            "]"
             );
 
 
@@ -439,10 +419,233 @@ public class NafithAutomation {
 
 
     // =========================================================
+    // DIRECT PLANS NAVIGATION
+    //
+    // الخطط فقط
+    //
+    // الـHTML الحقيقي عندك:
+    //
+    // <li data-sidebar="menu-item" data-state="open">
+    //
+    //     <button data-sidebar="menu-button">
+    //         ...
+    //         <span>الخطط</span>
+    //     </button>
+    //
+    //     <div data-state="open">
+    //
+    //         <a data-sidebar="menu-sub-button"
+    //            href="/app/plans-managements">
+    //             الخطط
+    //         </a>
+    //
+    //     </div>
+    //
+    // =========================================================
+
+    protected void navigateToPlans() {
+
+        System.out.println(
+                "===== NAVIGATE TO PLANS ====="
+        );
+
+
+        // =====================================================
+        // 1. جيب الـLI الكامل الخاص بالـParent "الخطط"
+        // =====================================================
+
+        By plansMenuItemLocator =
+                By.xpath(
+                        "//li[@data-sidebar='menu-item' " +
+                                "and .//span[normalize-space(.)='الخطط']]"
+                );
+
+
+        WebElement plansMenuItem =
+                wait.until(
+                        ExpectedConditions.presenceOfElementLocated(
+                                plansMenuItemLocator
+                        )
+                );
+
+
+        System.out.println(
+                "FOUND PLANS MENU ITEM"
+        );
+
+
+        // =====================================================
+        // 2. جيب زر الـParent نفسه من داخل الـLI
+        // =====================================================
+
+        WebElement plansParentButton =
+                plansMenuItem.findElement(
+                        By.xpath(
+                                ".//button[@data-sidebar='menu-button']"
+                        )
+                );
+
+
+        System.out.println(
+                "FOUND PLANS PARENT BUTTON: [" +
+                        plansParentButton.getText() +
+                        "]"
+        );
+
+
+        // =====================================================
+        // 3. نقرأ data-state من الـLI
+        //
+        // بالصورة عندك:
+        //
+        // data-state="open"
+        //
+        // =====================================================
+
+        String menuState =
+                plansMenuItem.getAttribute("data-state");
+
+
+        System.out.println(
+                "PLANS MENU STATE BEFORE: [" +
+                        menuState +
+                        "]"
+        );
+
+
+        // =====================================================
+        // 4. إذا الـParent مسكر فقط افتحه
+        //
+        // مهم جدًا:
+        // إذا مفتوح لا نضغطه مرة ثانية
+        // لأنه ممكن نسكره.
+        // =====================================================
+
+        if (!"open".equalsIgnoreCase(menuState)) {
+
+            System.out.println(
+                    "PLANS MENU IS CLOSED -> OPENING IT"
+            );
+
+
+            clickElement(plansParentButton);
+
+
+            // ننتظر الـLI نفسه يصير open
+            wait.until(
+                    ExpectedConditions.attributeToBe(
+                            plansMenuItem,
+                            "data-state",
+                            "open"
+                    )
+            );
+
+
+            System.out.println(
+                    "PLANS MENU OPENED"
+            );
+        }
+
+
+        // =====================================================
+        // 5. جيب Link الخطط نفسه
+        //
+        // هذا هو الـHTML اللي أثبتناه بالصورة:
+        //
+        // href="/app/plans-managements"
+        //
+        // =====================================================
+
+        By plansLinkLocator =
+                By.xpath(
+                        "//a[@data-sidebar='menu-sub-button' " +
+                                "and @href='/app/plans-managements']"
+                );
+
+
+        WebElement plansLink =
+                wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(
+                                plansLinkLocator
+                        )
+                );
+
+
+        System.out.println(
+                "FOUND PLANS LINK: [" +
+                        plansLink.getText() +
+                        "]"
+        );
+
+
+        System.out.println(
+                "PLANS HREF: [" +
+                        plansLink.getAttribute("href") +
+                        "]"
+        );
+
+
+        // =====================================================
+        // 6. Scroll للـLink
+        // =====================================================
+
+        ((JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({" +
+                                "block:'center'," +
+                                "inline:'nearest'" +
+                                "});",
+                        plansLink
+                );
+
+
+        sleep(500);
+
+
+        // =====================================================
+        // 7. اضغط الـLink
+        // =====================================================
+
+        clickElement(plansLink);
+
+
+        sleep(WAIT_AFTER_CLICK);
+
+
+        // =====================================================
+        // 8. تأكد أننا وصلنا لشاشة الخطط
+        // =====================================================
+
+        wait.until(
+                ExpectedConditions.urlContains(
+                        "/app/plans-managements"
+                )
+        );
+
+
+        Assert.assertTrue(
+                driver.getCurrentUrl()
+                        .contains("/app/plans-managements"),
+
+                "لم يتم فتح شاشة الخطط"
+        );
+
+
+        System.out.println(
+                "SUCCESS: PLANS SCREEN OPENED"
+        );
+
+
+        sleep(WAIT_AFTER_CLICK);
+    }
+
+
+    // =========================================================
     // FIND PARENT MENU
     // =========================================================
 
-    protected WebElement findParentMenu(String parentMenuText) {
+    protected WebElement findParentMenu(
+            String parentMenuText) {
 
         // =====================================================
         // 1. Locator أساسي للـ Parent Menu
@@ -487,14 +690,15 @@ public class NafithAutomation {
 
 
         System.out.println(
-                "===== DEBUG PARENT MENU: "
-                        + parentMenuText
-                        + " ====="
+                "===== DEBUG PARENT MENU: " +
+                        parentMenuText +
+                        " ====="
         );
 
+
         System.out.println(
-                "PARENT BUTTONS FOUND: "
-                        + buttons.size()
+                "PARENT BUTTONS FOUND: " +
+                        buttons.size()
         );
 
 
@@ -507,34 +711,37 @@ public class NafithAutomation {
             try {
 
                 System.out.println(
-                        "BUTTON TEXT: ["
-                                + button.getText()
-                                + "]"
+                        "BUTTON TEXT: [" +
+                                button.getText() +
+                                "]"
                 );
 
-                System.out.println(
-                        "BUTTON DISPLAYED: ["
-                                + button.isDisplayed()
-                                + "]"
-                );
 
                 System.out.println(
-                        "BUTTON DATA-STATE: ["
-                                + button.getAttribute("data-state")
-                                + "]"
+                        "BUTTON DISPLAYED: [" +
+                                button.isDisplayed() +
+                                "]"
+                );
+
+
+                System.out.println(
+                        "BUTTON DATA-STATE: [" +
+                                button.getAttribute("data-state") +
+                                "]"
                 );
 
 
                 if (button.isDisplayed()) {
 
                     System.out.println(
-                            "FOUND PARENT MENU: ["
-                                    + button.getText()
-                                    + "]"
+                            "FOUND PARENT MENU: [" +
+                                    button.getText() +
+                                    "]"
                     );
 
                     return button;
                 }
+
 
             } catch (Exception e) {
 
@@ -599,6 +806,7 @@ public class NafithAutomation {
                     return parentButton;
                 }
 
+
             } catch (Exception ignored) {
             }
         }
@@ -612,8 +820,8 @@ public class NafithAutomation {
         List<WebElement> allButtons =
                 driver.findElements(
                         By.xpath(
-                                "//button[.//*[contains(normalize-space(.),'" +
-                                        parentMenuText +
+                                "//button[.//*[contains(normalize-space(.),'"
+                                        + parentMenuText +
                                         "')]]"
                         )
                 );
@@ -640,6 +848,7 @@ public class NafithAutomation {
                     return button;
                 }
 
+
             } catch (Exception ignored) {
             }
         }
@@ -653,6 +862,7 @@ public class NafithAutomation {
                 "FAILED TO FIND PARENT MENU: "
                         + parentMenuText
         );
+
 
         return null;
     }
@@ -673,9 +883,16 @@ public class NafithAutomation {
                     )
             );
 
+
             element.click();
 
+
         } catch (Exception e) {
+
+            System.out.println(
+                    "Normal click failed. Trying JavaScript click..."
+            );
+
 
             ((JavascriptExecutor) driver)
                     .executeScript(
@@ -788,8 +1005,8 @@ public class NafithAutomation {
         List<WebElement> activityLinks =
                 driver.findElements(
                         By.xpath(
-                                "//a[contains(normalize-space(.)," +
-                                        "'سجل الحركات')]"
+                                "//a[contains(normalize-space(.),"
+                                        + "'سجل الحركات')]"
                         )
                 );
 
@@ -1076,16 +1293,55 @@ public class NafithAutomation {
 
         // =====================================================
         // 6. Plans
+        //
+        // مهم:
+        // الخطط الآن تستخدم الـmethod الخاص فيها فقط.
+        // باقي الشاشات لا تتأثر.
         // =====================================================
 
-        runScreenScenario(
-                "الخطط",
-                "الخطط",
-                "/app/plans-managements",
-                true,
-                false,
-                true
-        );
+        navigateToPlans();
+
+
+        // =====================================================
+        // بعد فتح الخطط:
+        // افتح أول Record
+        // =====================================================
+
+        String plansDetailsUrl =
+                openFirstRecordDetailsAndScroll();
+
+
+        // =====================================================
+        // رجوع لشاشة الخطط
+        // =====================================================
+
+        if (plansDetailsUrl != null) {
+
+            driver.navigate().to(
+                    BASE_URL +
+                            "/app/plans-managements"
+            );
+
+
+            sleep(WAIT_AFTER_CLICK);
+
+
+            wait.until(
+                    ExpectedConditions.urlContains(
+                            "/app/plans-managements"
+                    )
+            );
+
+
+            sleep(WAIT_AFTER_CLICK);
+        }
+
+
+        // =====================================================
+        // Download للخطط
+        // =====================================================
+
+        clickDownloadButton();
 
 
         // =====================================================
