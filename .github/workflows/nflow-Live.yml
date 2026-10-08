@@ -1,6 +1,12 @@
 name: NFLOW Live Tests
 
 on:
+  push:
+    paths:
+      - 'NFLOW_HEALTH_CHECK_LIVE.postman_collection.json'
+      - 'NFLOW_LIVE.postman_environment.json'
+      - '.github/workflows/nflow-tests.yml'
+
   workflow_dispatch:
 
   schedule:
@@ -27,10 +33,7 @@ jobs:
 
       - name: Run NFLOW Live Tests
         run: |
-          newman run "NFLOW_HEALTH_CHECK_LIVE.postman_collection.json" \
-            -e "NFLOW_LIVE.postman_environment.json" \
-            --reporters "cli,htmlextra" \
-            --reporter-htmlextra-export nflow-report.html
+          newman run "NFLOW_HEALTH_CHECK_LIVE.postman_collection.json" -e "NFLOW_LIVE.postman_environment.json" --reporters "cli,htmlextra" --reporter-htmlextra-export "nflow-report.html"
 
       - name: Upload NFLOW Report
         if: always()
@@ -48,7 +51,7 @@ jobs:
           username: qatest@nafith.com
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: "NFLOW Live - ${{ github.run_id }}"
-          to: haljassem@nafith.com, skhalayleh@nafith.com
+          to: skhalayleh@nafith.com
           from: qatest@nafith.com
           body: "NFLOW Live daily health test: ${{ job.status }}"
           attachments: nflow-report.html
