@@ -32,6 +32,7 @@ jobs:
           npm install -g newman newman-reporter-htmlextra
 
       - name: Run NFLOW Live Tests
+        shell: powershell
         run: |
           newman run "NFLOW_HEALTH_CHECK_LIVE.postman_collection.json" -e "NFLOW_LIVE.postman_environment.json" --reporters "cli,htmlextra" --reporter-htmlextra-export "nflow-report.html"
 
