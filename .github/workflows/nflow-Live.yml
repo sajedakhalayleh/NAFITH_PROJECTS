@@ -1,0 +1,54 @@
+name: NFLOW Live Tests
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Every day at 7:00 AM Jordan time
+    - cron: '0 4 * * *'
+
+jobs:
+  run-tests:
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman
+        run: |
+          npm install -g newman newman-reporter-htmlextra
+
+      - name: Run NFLOW Live Tests
+        run: |
+          newman run "NFLOW_HEALTH_CHECK_LIVE.postman_collection.json" \
+            -e "NFLOW_LIVE.postman_environment.json" \
+            --reporters "cli,htmlextra" \
+            --reporter-htmlextra-export nflow-report.html
+
+      - name: Upload NFLOW Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nflow-report
+          path: nflow-report.html
+
+      - name: Send NFLOW Email Report
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: qatest@nafith.com
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "NFLOW Live - ${{ github.run_id }}"
+          to: haljassem@nafith.com, skhalayleh@nafith.com
+          from: qatest@nafith.com
+          body: "NFLOW Live daily health test: ${{ job.status }}"
+          attachments: nflow-report.html
