@@ -11,7 +11,7 @@ on:
 
   schedule:
     # Every day at 7:00 AM Jordan time
-    - cron: '0 4 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   run-tests:
