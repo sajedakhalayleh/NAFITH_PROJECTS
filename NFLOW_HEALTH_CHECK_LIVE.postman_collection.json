@@ -8,6 +8,112 @@
   },
   "item": [
     {
+      "name": "ADMIN_LOGIN",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var responseJSON = pm.response.json();\r",
+              "\r",
+              "// Set the ADMIN_TOKEN variable from the response body\r",
+              "pm.test(\"Set ADMIN_TOKEN variable from response\", function () {\r",
+              "    pm.environment.set(\"ADMIN_TOKEN\", responseJSON.data.token);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Referer",
+            "value": "https://hcs.nafith.eg/auth/login"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "sentry-trace",
+            "value": "4b3065a38a4f43bca91d57d2ea6fbbb9-9b7a0d992a08ec66-1"
+          },
+          {
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=4b3065a38a4f43bca91d57d2ea6fbbb9,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.6385179110377159,sentry-sample_rate=1"
+          },
+          {
+            "key": "Origin",
+            "value": "https://hcs.nafith.eg"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y83DGkxj4IefcQ2JofwepwQFGhSESocbOem8ABqP_Q6gAw3d-aWkt8uhQNkYj0ztfl1nqr8CxvcczaSuJTgcFMQKrks0aDBug8RoNxd92HcSSWyB55zl1vQ9NtA_5tBgTHqqZLIR6r3KBtfE8UKYVfAtkQjgA1OpNVWdTHGvnIve1u5PEIj-iDtccVbGmQqOzRIt_MXKsfYb9BJyrzrCfiE-nfEaIATyGXiIWavVzz43pO_xawe_45akByfKK_IHkt3h5mVLoeYvXZ-ELEprTM5GZsN5HGGKd_05SSrSCS_WEdD3M_Q1XU61hYTmkkOfMYEHpiRP6y6PMkzYTkAbSqmyq-yAYVupjZZ8SXwA7Td2uCjBQN0bwFTgtozXajfe_z-zYqGFjaHLDLvcA3dBgyKZM24dMoTNOW5fReah3sSgbM3lq8HPNTRcsfweqktN6XNNOq90vw2QVcx4rRP1aexboUk2WIx3etpbokmab7P9XN5U81NbVL4sZuhdTE3_nxX9SMPU_FbohNOzpQWSq2Ymv2dGCHt4sOwDlmtft5trmWSvGD-q_pH9R14rBcYavtjLaB6QSMCHwJX5iUVWgsudAGd1jJ4vPapzLzvYe6Eia2hGMokQDyD83_uOJDzASD3wP2aBlCGwmSZLLQZXa9pyOycBeaAvKa0_6Hyq7CJqNOJld4dI3inRkzlj2PyRMH6nBe_SuRcH99bVTkJ6CRtyD--LuLeE0qmLhfW8CDBEyXpMJ4PHBnJpQifF3W0nk38ePy1rnALdD_P228SWyZVyVts-hACN6QwjsNgIUABObwYRvVBSCRJNw7a8YIHendDx5hf1Gl-sd9A1MH64g6orUjlpvF2A_ld-c86r7fCyBw7dCkBvmEN6gtjopM5K72Rx2f9NajIyipN5XNlXkQvZT_rSohrmQeb4dtnvV8mn9zO0SpRMUVTmHrXXhIYt2_qRxZcbOWh29Jx2nvqvfB"
+          },
+          {
+            "key": "Sec-Fetch-Dest",
+            "value": "empty"
+          },
+          {
+            "key": "Sec-Fetch-Mode",
+            "value": "cors"
+          },
+          {
+            "key": "Sec-Fetch-Site",
+            "value": "same-origin"
+          },
+          {
+            "key": "Priority",
+            "value": "u=0"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"userName\":\"systemadmin\",\"password\":\"Aa@123456\",\"IgnoreApp\":false}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{NFLOW_LIVE_URL}}Users/LogIn",
+          "host": [
+            "{{NFLOW_LIVE_URL}}Users"
+          ],
+          "path": [
+            "LogIn"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "GET_PERMIT_DASHBOARD",
       "event": [
         {
@@ -25,6 +131,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [
           {
@@ -124,6 +240,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -233,85 +359,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=33e19a0809b644799c3b60f25959d352,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.4220926496298878,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/manifest"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "33e19a0809b644799c3b60f25959d352-a9363eb1b69b87fd-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Manifest Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"statusCode\":\"NEW\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/050CAEF1-6E26-42B2-9873-D23434C0093D/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A27%3A00.142Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Manifests/ExportExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "050CAEF1-6E26-42B2-9873-D23434C0093D",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A27%3A00.142Z"
-            }
+            "webGateway",
+            "Manifests",
+            "ExportExcelReport"
           ]
         }
       },
@@ -335,6 +475,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -441,6 +591,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -544,87 +704,122 @@
             "packages": {},
             "requests": {}
           }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const yesterday = new Date();",
+              "yesterday.setDate(yesterday.getDate() - 1);",
+              "const yyyy = yesterday.getFullYear();",
+              "const mm = String(yesterday.getMonth() + 1).padStart(2, '0');",
+              "const dd = String(yesterday.getDate()).padStart(2, '0');",
+              "const yesterdayDate = `${yyyy}-${mm}-${dd}`;",
+              "pm.environment.set(\"yesterday\", yesterdayDate);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
         }
       ],
       "request": {
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=f812e063fd1b4f078f807fa56dc2fbe8,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.9571161784008415,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/containers-polices"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sentry-trace",
+            "value": "f812e063fd1b4f078f807fa56dc2fbe8-96c3a753af765d7e-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Container Policies | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"manifestNumber\":\"\",\"policyNo\":\"\",\"statusCode\":\"\",\"operationType\":\"EXPORT\",\"clearingCompanyCode\":\"\",\"acid\":\"\",\"importerNumber\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"}}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T09%3A05%3A35.994Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Policies/ExportPoliciesContainersToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T09%3A05%3A35.994Z"
-            }
+            "webGateway",
+            "Policies",
+            "ExportPoliciesContainersToExcel"
           ]
         }
       },
@@ -648,6 +843,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -754,6 +959,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -863,85 +1078,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=7431034b45ef4f92ac2ff0088f99b276,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.3264386534069281,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/cargo-polices"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "7431034b45ef4f92ac2ff0088f99b276-a66e77d62e90e6fe-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Cargo Policies | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"manifestNumber\":\"\",\"policyNo\":\"\",\"acid\":\"\",\"importerNumber\":\"\",\"clearingCompanyCode\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"}}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/DB7A4A94-FE92-41CC-8AEB-24B4C55CB5F5/to/wsm.sessionDeactivated?tm=2026-10-08T09%3A09%3A11.295Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Policies/ExportPoliciesCargoToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "DB7A4A94-FE92-41CC-8AEB-24B4C55CB5F5",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T09%3A09%3A11.295Z"
-            }
+            "webGateway",
+            "Policies",
+            "ExportPoliciesCargoToExcel"
           ]
         }
       },
@@ -965,6 +1194,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1071,6 +1310,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1180,81 +1429,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=6e9c88b9b633426e96f0a8618adf8ebb,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.5493337100611284,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/containers"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sentry-trace",
+            "value": "6e9c88b9b633426e96f0a8618adf8ebb-8a4ea3ea32d52151-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Containers Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"containerNumber\":\"\",\"manifestNumber\":\"\",\"policyNo\":\"\",\"statusCode\":\"NEW\",\"isonumber\":\"\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/DB7A4A94-FE92-41CC-8AEB-24B4C55CB5F5/to/wsm.sessionDeactivated?tm=2026-10-08T09%3A10%3A29.263Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Containers/ExportContainersToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "DB7A4A94-FE92-41CC-8AEB-24B4C55CB5F5",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T09%3A10%3A29.263Z"
-            }
+            "webGateway",
+            "Containers",
+            "ExportContainersToExcel"
           ]
         }
       },
@@ -1278,6 +1545,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1384,6 +1661,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1495,6 +1782,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1605,6 +1902,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1714,85 +2021,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=0612772effe949e3ab528ca13737f5a4,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.5032370185383365,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/cargo-release"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "0612772effe949e3ab528ca13737f5a4-b7d62dfc29e3208b-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Cargo Release | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"serialNo\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"},\"policyNo\":\"\",\"commercialNameLocalized\":\"\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A40%3A17.463Z",
+          "raw": "https://hcs.nafith.eg/webGateway/CargoRelease/ExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A40%3A17.463Z"
-            }
+            "webGateway",
+            "CargoRelease",
+            "ExcelReport"
           ]
         }
       },
@@ -1816,6 +2137,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -1922,6 +2253,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -2031,85 +2372,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=f41904406adc4ec0ac5fca25dc7094d3,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.3332247318295807,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/cargo-permits"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "f41904406adc4ec0ac5fca25dc7094d3-b5352cbc06b316fb-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Entry Passes Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"permitNumber\":\"\",\"truckPlateNumber\":\"\",\"truckPlateCode\":\"\",\"trailerPlateNumber\":\"\",\"trailerPlateCode\":\"\",\"firstContainerNumber\":\"\",\"cargoSerialNo\":\"\",\"driverDocumentNumber\":\"\",\"driverName\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"}}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A43%3A21.852Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Permits/ExportPermitToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A43%3A21.852Z"
-            }
+            "webGateway",
+            "Permits",
+            "ExportPermitToExcel"
           ]
         }
       },
@@ -2133,6 +2488,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -2239,6 +2604,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -2348,85 +2723,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=6aff2e42ed674b1fb16ec2332b16217e,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.47254476575047255,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/plans-managements"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "6aff2e42ed674b1fb16ec2332b16217e-b3132f81e437daa0-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Plans Managements | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"serialNo\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"}}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A44%3A58.544Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Plans/ExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A44%3A58.544Z"
-            }
+            "webGateway",
+            "Plans",
+            "ExcelReport"
           ]
         }
       },
@@ -2450,6 +2839,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -2556,6 +2955,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [
           {
@@ -2651,6 +3060,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [
           {
@@ -2746,6 +3165,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [
           {
@@ -2841,6 +3270,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -2947,88 +3386,112 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=2d3e7bc0fb92474f91aa4c275d7838c2,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.21896748343628047,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/fleets"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "2d3e7bc0fb92474f91aa4c275d7838c2-9d267fcb60352bbd-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Fleets Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"plateNo\":\"\",\"plateCode\":\"\",\"statusCode\":\"NEW\",\"representativeName\":\"\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A50%3A07.520Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Fleets/ExportExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A50%3A07.520Z"
-            }
+            "webGateway",
+            "Fleets",
+            "ExportExcelReport"
           ]
         }
       },
@@ -3052,6 +3515,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3158,6 +3631,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3267,85 +3750,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=7d9e92edecbe4f478fe085241f1c4350,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.10932974597657141,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/users"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "7d9e92edecbe4f478fe085241f1c4350-8de8bffaddae33ad-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"User Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"username\":\"\",\"fullNameLocalized\":\"\",\"role\":\"TRUCKING_COMPANY\",\"companyName\":\"\",\"referenceNo\":\"\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A51%3A33.221Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Users/ExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A51%3A33.221Z"
-            }
+            "webGateway",
+            "Users",
+            "ExcelReport"
           ]
         }
       },
@@ -3369,6 +3866,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3475,6 +3982,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3584,85 +4101,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=de6bbfce37c4450dbe6846accfa3f1e4,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.588842808637998,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/stackholders"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "de6bbfce37c4450dbe6846accfa3f1e4-8607b8daece383e2-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Stakeholders Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"representativeName\":\"\",\"companyName\":\"\",\"registrationType\":\"TRUCKING_COMPANY\"}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A53%3A23.911Z",
+          "raw": "https://hcs.nafith.eg/webGateway/Stakeholders/ExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A53%3A23.911Z"
-            }
+            "webGateway",
+            "Stakeholders",
+            "ExcelReport"
           ]
         }
       },
@@ -3686,6 +4217,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3792,6 +4333,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -3901,81 +4452,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=76970975058e4a658dabb6f3af707874,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.7799573390011019,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/tagging"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sentry-trace",
+            "value": "76970975058e4a658dabb6f3af707874-b4aaa30551d5324d-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Tagging Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A56%3A13.536Z",
+          "raw": "https://hcs.nafith.eg/webGateway/RFIDs/ExportRFIDToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A56%3A13.536Z"
-            }
+            "webGateway",
+            "RFIDs",
+            "ExportRFIDToExcel"
           ]
         }
       },
@@ -3999,6 +4568,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -4105,6 +4684,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -4214,85 +4803,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=93d929ec11104985bf4849793431edf9,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.16991676307168135,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/black-list"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "93d929ec11104985bf4849793431edf9-be3f5f6cdb26909f-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Blacklist Management | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A58%3A20.886Z",
+          "raw": "https://hcs.nafith.eg/webGateway/BlackLists/ExcelReport",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A58%3A20.886Z"
-            }
+            "webGateway",
+            "BlackLists",
+            "ExcelReport"
           ]
         }
       },
@@ -4316,6 +4919,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -4425,81 +5038,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=4ccfde151d434842965a831976db43e4,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.6732430087639149,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/financial"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sentry-trace",
+            "value": "4ccfde151d434842965a831976db43e4-b00303550ac61001-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Financial System | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{\"transactionNumber\":\"\",\"transactionType\":\"CreatePermit\",\"referenceNumber\":\"\",\"createdDate\":{\"Value\":\"{{yesterday}}\",\"Value2\":\"{{yesterday}}\",\"Operation\":\"Between\"}}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T08%3A59%3A43.573Z",
+          "raw": "https://hcs.nafith.eg/webGateway/FinancialTransactions/ExportFinTransToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T08%3A59%3A43.573Z"
-            }
+            "webGateway",
+            "FinancialTransactions",
+            "ExportFinTransToExcel"
           ]
         }
       },
@@ -4523,6 +5154,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -4629,6 +5270,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
@@ -4742,85 +5393,99 @@
         "method": "POST",
         "header": [
           {
-            "key": "User-Agent",
-            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0"
+            "key": "accept",
+            "value": "application/json"
           },
           {
-            "key": "Accept",
-            "value": "*/*"
-          },
-          {
-            "key": "Accept-Language",
+            "key": "accept-language",
             "value": "en-US,en;q=0.9"
           },
           {
-            "key": "Accept-Encoding",
-            "value": "gzip, deflate, br, zstd"
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhN2RmNzc3MS1jOTRjLTQxOTgtYjIxYS1hMDE2OGM2MjJmNTciLCJ1bmlxdWVfbmFtZSI6IjNhOTQxOTA5LWNlZmYtNDQyNS05NjRiLTlkYmZiNjY2ZDk2NiIsIm5iZiI6MTc5MTQ2MzAwNywiZXhwIjoxNzkxNDcwMjA3LCJpYXQiOjE3OTE0NjMwMDd9.oEzk78fOOdty37g-xobKee5zIbxRovVYh_Ezi3jlIpg"
           },
           {
-            "key": "Content-Type",
-            "value": "text/plain;charset=UTF-8"
+            "key": "baggage",
+            "value": "sentry-environment=production,sentry-public_key=75f66a1efea32be72bd5b3419966c196,sentry-trace_id=4ccfde151d434842965a831976db43e4,sentry-org_id=4510374498533376,sentry-sampled=true,sentry-sample_rand=0.6732430087639149,sentry-sample_rate=1"
           },
           {
-            "key": "Origin",
+            "key": "content-type",
+            "value": "application/json"
+          },
+          {
+            "key": "languagecode",
+            "value": "ar"
+          },
+          {
+            "key": "origin",
             "value": "https://hcs.nafith.eg"
           },
           {
-            "key": "Connection",
-            "value": "keep-alive"
+            "key": "priority",
+            "value": "u=1, i"
           },
           {
-            "key": "Referer",
-            "value": "https://hcs.nafith.eg/"
+            "key": "referer",
+            "value": "https://hcs.nafith.eg/app/financial"
           },
           {
-            "key": "Sec-Fetch-Dest",
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"154\", \"Google Chrome\";v=\"154\", \"Not A(Brand\";v=\"99\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
             "value": "empty"
           },
           {
-            "key": "Sec-Fetch-Mode",
+            "key": "sec-fetch-mode",
             "value": "cors"
           },
           {
-            "key": "Sec-Fetch-Site",
-            "value": "cross-site"
+            "key": "sec-fetch-site",
+            "value": "same-origin"
           },
           {
-            "key": "TE",
-            "value": "trailers"
+            "key": "sentry-trace",
+            "value": "4ccfde151d434842965a831976db43e4-a71c99f78275bffe-1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Cookie",
+            "value": ".AspNetCore.Identity.Application=CfDJ8KRR1IOreDhDjlVn1JG8d_Y6pyr_-AX2GSHc5JomVOtDBGDyJS3CZrc30W1HulqQOmz9eJhqh_vDCmaODFyqRreJ6puf38WLhdcpJOX60Q6y7QeeOVP9O7Yhpfhv-QC0HsmCjv4Ks46SiHmV7b5qxoFFxaRF6268VepzWEBJrq93oh-NpPYqMjKWoYAYR0OyatgB5bSHVK0ko_U2l56myoksNF7Hj-p0qqHRkaee6A7nnTEzGKRhy1SBCi3ZIE94SCjA4_tUlvM-747JhZczvMjVYtw9BzMZBmbaOZEcywPSjLw2g0tWc4f13VxfLkWR8ADvXIi4t1sAylme2oi8Vg6PPadWHF3Yjb1Y40lo1CfA2SysGDLRGcyN0qwza9r7gEN8ml8q4L30Z0yJQWpYM9GnFMPJKrBlrJAvqnFFw_yKteTzzOtWK1nD9zxx8cyXKem2nBANnCIGW9lXrGU7znYFJoZptSnDV3FN9tii2iK9qW9ywtKuDzj544jlURE7QePjjqbaMCq7x1c1Cy0ujxkPJjsfiAPmOF9xg1nstHWvd5FW2ymZOyw2pasFo9bpi_9bqWFw2xbRphkgvcKvx0V3WNO07ZEWf0WLs930SZHoM3PFHByOmHofybo5jMq9qsyd9SZEM6481byqx9JY2v74p7BpDfpSgy9AZ8-ue_aeG9zZgdKVtDQ4wXEUONnHlIgjSPMv4MRhJ52b5XBFsZMM1QHWhWySbvOxNwxd3TEm1p2qzUz3XQwC_crEhs2bB81fd33dqrJh68ceHkGWmSjS-86P86_pL4bV-6hr8KugNhAegUo9ssFfOlPNBz7Q3fZ2IpQomjF5S59-iZTqirFConWq2Ku1hcPqx-2Ee0DvSMnZdlMX-qvcNua9c4h13A-SBilRL7SsafEhkzRUycqh4spqZiG0lpmCA3fcOtRyhe_MVeEFMjb3yv3PKEsvJ_L9dT5Ht8KOzyyYlCJeDCngkePGqJDDvXqVjijRoP_H"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\"result\":0,\"method\":\"wsm.sessionDeactivated\",\"parameters\":\"{\\\"title\\\":\\\"Financial System | NFlow\\\"}\"}",
+          "raw": "{\"pageIndex\":1,\"pageSize\":0,\"sort\":\"\",\"query\":\"\",\"filterData\":{}}",
           "options": {
             "raw": {
-              "language": "text"
+              "language": "json"
             }
           }
         },
         "url": {
-          "raw": "https://ff.kes.v2.scr.kaspersky-labs.com/19598BCC-2FBA-481F-A407-2D16D87AC5CD/2E19BE04-B3EF-48A4-8B3D-179E385A6277/to/wsm.sessionDeactivated?tm=2026-10-08T09%3A02%3A51.807Z",
+          "raw": "https://hcs.nafith.eg/webGateway/BalanceDeposits/ExportDepositsToExcel",
           "protocol": "https",
           "host": [
-            "ff",
-            "kes",
-            "v2",
-            "scr",
-            "kaspersky-labs",
-            "com"
+            "hcs",
+            "nafith",
+            "eg"
           ],
           "path": [
-            "19598BCC-2FBA-481F-A407-2D16D87AC5CD",
-            "2E19BE04-B3EF-48A4-8B3D-179E385A6277",
-            "to",
-            "wsm.sessionDeactivated"
-          ],
-          "query": [
-            {
-              "key": "tm",
-              "value": "2026-10-08T09%3A02%3A51.807Z"
-            }
+            "webGateway",
+            "BalanceDeposits",
+            "ExportDepositsToExcel"
           ]
         }
       },
@@ -4844,6 +5509,16 @@
         }
       ],
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [
           {
